@@ -1,12 +1,12 @@
-const input1: HTMLInputElement = document.querySelector("#input1")
-const input2: HTMLInputElement = document.querySelector("#input2")
-const button = document.querySelector('button')
-const outputDiv = document.querySelector("div")
+const button = document.querySelector('button');
 
-const addFunc = (v1: number, v2:number) => v1 + v2
+const calculatePrice = (orginalPrice: number, discount: boolean) => {
+   return discount ? orginalPrice * 0.8 : orginalPrice;
+}
 
 button.addEventListener("click", () => {
-    const sum = addFunc(Number(input1.value), Number(input2.value))
-    const sum2 = sum.toString()
-    outputDiv.textContent = sum2
-})
+   const orginalPrice: number = 50;
+   const discount: boolean = new URLSearchParams(window.location.search).get("discount") === "true";
+   console.log(discount)
+   console.log(calculatePrice(orginalPrice, discount))
+});
