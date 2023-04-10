@@ -1,48 +1,40 @@
+import { render } from './helpers/render-tasks.js';
+import { renderCategories } from './helpers/render-categories.js';
 const inputElement = document.querySelector("#name");
 const buttonElement = document.querySelector("button");
 const taskContainer = document.querySelector(".tasks");
+const categoriesContainer = document.querySelector(".categories");
+let selectedCategory;
+const categories = ["hobby", "general", "home"];
 const tasks = [
     {
         name: "make a homework",
         done: false
     },
     {
-        name: "buy a car",
-        done: true
+        name: "buy a sport car",
+        done: true,
+        category: "hobby"
     },
     {
         name: "build a house",
-        done: false
+        done: false,
+        category: "home"
     }
 ];
-const render = () => {
-    taskContainer.innerHTML = "";
-    inputElement.value = "";
-    tasks.forEach((task, index) => {
-        const id = `task-${index}`;
-        const taskElement = document.createElement("li");
-        const labelElement = document.createElement("label");
-        const checkElement = document.createElement("input");
-        labelElement.innerText = task.name;
-        labelElement.setAttribute("for", id);
-        taskContainer.appendChild(taskElement);
-        taskElement.appendChild(labelElement);
-        taskElement.appendChild(checkElement);
-        checkElement.type = "checkbox";
-        checkElement.id = id;
-        checkElement.checked = task.done;
-        checkElement.addEventListener("change", () => {
-            task.done = !task.done;
-        });
-    });
-};
-render();
-const AddTask = (taskName) => {
-    tasks.push({ name: taskName, done: false });
+render(tasks, taskContainer);
+renderCategories(categories, categoriesContainer, selectedCategory);
+const AddTask = (task) => {
+    tasks.push(task);
 };
 buttonElement.addEventListener("click", (e) => {
     e.preventDefault();
     console.log(inputElement.value);
-    AddTask(inputElement.value);
-    render();
+    console.log(selectedCategory);
+    AddTask({
+        name: inputElement.value,
+        done: false,
+        category: selectedCategory
+    });
+    render(tasks, taskContainer);
 });

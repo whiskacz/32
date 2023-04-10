@@ -38,6 +38,7 @@ input type:checkbox{
 }
 
 button{
+    margin-top: 10px;
     border: 1px solid white;
     border-radius: 5px;
     background-color: #ddd;
@@ -72,4 +73,15 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
+.hobby{
+    color: yellowgreen;
+}
+
+.home{
+    color: darkblue
+}
+
+.general{
+    color: green
+}
  

@@ -1,58 +1,53 @@
+import { Task, Category } from './types/types';
+import { render } from './helpers/render-tasks.js';
+import { renderCategories } from './helpers/render-categories.js';
+
 const inputElement: HTMLInputElement = document.querySelector("#name")
 const buttonElement: HTMLButtonElement = document.querySelector("button")
 const taskContainer: HTMLElement = document.querySelector(".tasks")
+const categoriesContainer: HTMLElement = document.querySelector(".categories")
 
-const tasks: { 
-    name: string;
-    done: boolean;
-}[] = [
+let selectedCategory: Category;
+
+
+const categories: Category[] = ["hobby", "general", "home"]
+
+const tasks: Task[] = [
     {
     name: "make a homework",
     done: false
 },
 {   
-    name: "buy a car",
-    done: true
+    name: "buy a sport car",
+    done: true,
+    category: "hobby"
 },
 {
     name: "build a house",
-    done: false
+    done: false,
+    category: "home"
 }
 ]
-const render = () => { 
-    taskContainer.innerHTML = ""  
-    inputElement.value = ""
-tasks.forEach((task, index) => {
-    const id:string = `task-${index}`
-    const taskElement: HTMLElement = document.createElement("li")
-    const labelElement: HTMLLabelElement = document.createElement("label")
-    const checkElement: HTMLInputElement = document.createElement("input")
-    
-    labelElement.innerText = task.name
-    labelElement.setAttribute("for", id)
 
-    taskContainer.appendChild(taskElement)
-    taskElement.appendChild(labelElement)
-    taskElement.appendChild(checkElement)
+render(tasks, taskContainer)
 
-    checkElement.type = "checkbox"
-    checkElement.id = id
-    checkElement.checked = task.done
-    checkElement.addEventListener("change", () =>{
-            task.done = !task.done
-    })
 
-})
-}
-render()
 
-const AddTask = (taskName: string) => {
-    tasks.push({name: taskName, done: false})
+
+renderCategories(categories, categoriesContainer, selectedCategory)
+
+const AddTask = (task: Task) => {
+    tasks.push(task)
 }
 
 buttonElement.addEventListener("click", (e) =>{
+    
     e.preventDefault()
     console.log(inputElement.value)
-    AddTask(inputElement.value)
-    render()
+    console.log(selectedCategory)
+    AddTask({
+        name: inputElement.value, 
+        done: false, 
+        category: selectedCategory})
+    render(tasks, taskContainer)
 })
